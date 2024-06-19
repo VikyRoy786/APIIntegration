@@ -9,6 +9,9 @@ import { MessionService } from '../../service/mession.service';
   styleUrl: './spiderman.component.css'
 })
 export class SpidermanComponent implements OnInit {
+getId(arg:any) :any{
+return arg
+}
   missions : any = {id:'', desc :''}
   constructor(private missionService : MessionService) {
     
@@ -17,6 +20,9 @@ export class SpidermanComponent implements OnInit {
     this.missionService.getMissions().subscribe((data) =>{
       this.missions = data;
     });
+    this.missionService.dataAdded().subscribe((data)=>this.missionService.getMissions().subscribe((data) =>{
+      this.missions = data;
+    }))
   }
   onRemove(id : number){
     this.missionService.removeMission(id).subscribe(()=>this.missionService.getMissions().subscribe((data:any)=>this.missions = data))
